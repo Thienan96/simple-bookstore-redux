@@ -1,0 +1,10 @@
+<mat-card class="book-card">
+    <div class='book-image'>
+        <img mat-card-image [style.width.%]='85' [src]="book?.volumeInfo?.imageLinks?.thumbnail">
+    </div>
+    <mat-card-content>
+        <p>
+            {{book?.volumeInfo?.title}}
+        </p>
+    </mat-card-content>
+</mat-card>

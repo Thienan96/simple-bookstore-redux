@@ -1,0 +1,15 @@
+<mat-toolbar color="primary" style="height: 100px">
+    <div fxFill fxLayout="row" style="padding: 0 15%;" fxLayoutAlign=" center">
+        <mat-form-field fxFlex>
+            <input #searchInput placeholder="Search" matInput type="text" [(ngModel)]='seachText'>
+        </mat-form-field>
+        <button mat-icon-button matBadgePosition="after" matBadgeColor="accent" [routerLink]="['/shopping-cart']">
+            <mat-icon>add_shopping_cart</mat-icon>
+        </button>
+    </div>
+</mat-toolbar>
+<div fxFill fxLayout="row" style="padding: 20px 15%;">
+    <app-book-authors (authorClick)='onAuthorClick($event)' [selectedAuthor]='selectedAuthor' fxFlex='20'>
+    </app-book-authors>
+    <app-book-list fxFlex></app-book-list>
+</div>

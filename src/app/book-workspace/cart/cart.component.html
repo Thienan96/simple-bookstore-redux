@@ -1,0 +1,60 @@
+<mat-toolbar color="primary" style="height: 100px">
+    <div fxFill fxLayout="row" style="padding: 0 15%;" fxLayoutAlign=" center">
+        <mat-form-field fxFlex>
+            <input #searchInput disabled matInput type="text">
+        </mat-form-field>
+        <button mat-icon-button matBadgePosition="after" matBadgeColor="accent" [routerLink]="['/shopping-cart']">
+            <mat-icon>add_shopping_cart</mat-icon>
+        </button>
+    </div>
+</mat-toolbar>
+<div style="padding: 20px 15%;" fxLayout='row'>
+    <ng-container *ngIf='cart'>
+        <div fxFlex='70' fxLayout='column'>
+            <div fxLayout='column' *ngFor='let item of cart.Items'>
+                <div fxLayout='row' fxLayoutAlign=" center" class='row-item'>
+                    <img class="custom-image" [src]="item?.Item?.volumeInfo?.imageLinks?.thumbnail">
+                    <div fxFlex fxLayout='column'>
+                        <span fxFlex>{{item?.Item?.volumeInfo?.title}}</span>
+                        Price: 25$
+                    </div>
+                    <div fxLayout='row'>
+                        <button mat-icon-button color="primary" (click)='add(item)'>
+                            <mat-icon>add</mat-icon>
+                        </button>
+                        <input style="border: 1px solid; width: 50px;" [value]='item?.Amount' matInput type="number">
+                        <button mat-icon-button color="primary" (click)='remove(item)'>
+                            <mat-icon>remove</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div fxLayout='row' fxLayoutAlign=" center" class='row-item'>
+                <div fxFlex style="text-align: center;">Total: {{total}}$</div>
+            </div>
+        </div>
+        <div style="padding-left: 15px;" fxFlex fxLayout='column'>
+            <div fxLayout='column' fxLayoutAlign="center" class='row-item'
+                [class.delivery-selected]="deliveryBy === 'Motorbike'" (click)="chooseDelivery('Motorbike')">
+                <span>Motobike</span>
+                <span>Cost: {{constForMotorbike}}$</span>
+                <span>Factor: {{factorForMotorBike}}</span>
+            </div>
+            <div fxLayout='column' fxLayoutAlign="center" class='row-item'
+                [class.delivery-selected]="deliveryBy === 'Train'" (click)="chooseDelivery('Train')">
+                <span>Train</span>
+                <span>Cost: {{constForTrain}}$</span>
+                <span>Factor: {{factorForTrain}}</span>
+            </div>
+            <div fxLayout='column' fxLayoutAlign="center" class='row-item'
+                [class.delivery-selected]="deliveryBy === 'Aircraft'" (click)="chooseDelivery('Aircraft')">
+                <span>Aircraft</span>
+                <span>Cost: {{constForAircraft}}$</span>
+                <span>Factor: {{factorForAirCraft}}</span>
+            </div>
+            <button mat-raised-button color="primary" (click)='checkOut()'>Check out</button>
+
+        </div>
+    </ng-container>
+    <div *ngIf='!cart'>You don't have any items, please go to homepage <a [routerLink]="['/']">Home</a></div>
+</div>
