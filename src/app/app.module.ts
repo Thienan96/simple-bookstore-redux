@@ -10,16 +10,18 @@ import { EffectsModule } from '@ngrx/effects';
 import { BookEffects } from './state/book/book.effects';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FooterModule } from './footer/footer.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     CommonModule,
+    FooterModule,
     StoreModule.forRoot({ books: BooksReducer }),
     EffectsModule.forRoot([BookEffects]),
     HttpClientModule
