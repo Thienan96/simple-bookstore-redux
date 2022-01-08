@@ -15,3 +15,6 @@ import { FooterComponent } from './footer.component';
   providers: [],
 })
 export class FooterModule { }
+// "@ngrx/core": "^1.2.0",
+// "@ngrx/effects": "^13.1.1",
+// "@ngrx/store": "^13.1.1",
