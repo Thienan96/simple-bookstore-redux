@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { GoogleMapsModule } from '@angular/google-maps';
@@ -8,6 +9,7 @@ import { FooterComponent } from './footer.component';
     FooterComponent,
   ],
   imports: [
+      CommonModule,
       FlexLayoutModule,
       GoogleMapsModule
   ],
@@ -15,6 +17,3 @@ import { FooterComponent } from './footer.component';
   providers: [],
 })
 export class FooterModule { }
-// "@ngrx/core": "^1.2.0",
-// "@ngrx/effects": "^13.1.1",
-// "@ngrx/store": "^13.1.1",

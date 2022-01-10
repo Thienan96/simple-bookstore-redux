@@ -1,10 +1,10 @@
 import { createReducer, on, Action, State } from '@ngrx/store';
 import { IBook } from 'src/app/book-workspace/shared/book.model';
-import { IAppState } from '../app.state';
+import { BookState } from '../app.state';
 import { getBookList, getBookListFailed, getBookListSucess, searchBookTitle, searchBookTitleFailed, searchBookTitleSucess } from './book.action';
 
 
-export const initialState: IAppState = {
+export const initialState: BookState = {
     books: [],
 };
 const reducer = createReducer(

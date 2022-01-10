@@ -5,7 +5,7 @@ import { EMPTY, of } from 'rxjs';
 import { map, mergeMap, catchError } from 'rxjs/operators';
 import { IBook } from 'src/app/book-workspace/shared/book.model';
 import { BooksService } from 'src/app/book-workspace/shared/book.service';
-import { IAppState } from '../app.state';
+import { BookState } from '../app.state';
 import * as BookActions from './book.action'
 @Injectable()
 export class BookEffects {
@@ -19,7 +19,7 @@ export class BookEffects {
             ))
     )
     );
-    // merge wit this.store.select(state => state.....)
+    
     searchBook$ = createEffect(() => this.actions$.pipe(
         ofType(BookActions.searchBookTitle),
         mergeMap(action => this.booksService.searchBookList(action.QueryCondition)
@@ -32,6 +32,6 @@ export class BookEffects {
     constructor(
         private actions$: Actions,
         private booksService: BooksService,
-        private store: Store<IAppState>
+        private store: Store<BookState>
     ) { }
 }

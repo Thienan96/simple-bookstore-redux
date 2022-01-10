@@ -1,0 +1,64 @@
+<div fxFill fxLayout="column" fxLayoutAlign="start stretch">
+    <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" color='primary'>
+        <div fxLayout="row" fxFill fxLayoutAlign="space-between center">
+            <div fxLayout="row" [style.width.%]='100'>Register</div>
+            <button mat-icon-button (click)='close()'>
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </mat-toolbar>
+    <form [formGroup]="enrollForm" (ngSubmit)="onSubmit(enrollForm.value)" fxLayout='column' class='form'>
+
+        <mat-form-field>
+            <input matInput placeholder="Email" formControlName="Email" required>
+            <mat-error>
+                <span *ngIf="enrollForm?.get('Email')?.errors?.required">This value is mandatory</span>
+                <span *ngIf="enrollForm?.get('Email')?.errors?.pattern">Wrong format</span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="User name" formControlName="Username">
+            <mat-error *ngIf="enrollForm?.get('Username')?.errors?.required">
+                This value is mandatory
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Phone" formControlName="Phone">
+            <mat-error *ngIf="enrollForm?.get('Phone')?.errors?.required">
+                This value is mandatory
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Address" formControlName="Address">
+            <mat-error *ngIf="enrollForm?.get('Address')?.errors?.required">
+                This value is mandatory
+            </mat-error>
+        </mat-form-field>
+        <ng-container *ngIf='!initData'>
+            <mat-form-field>
+                <input matInput type="password" placeholder="Password" formControlName="Password">
+                <mat-error *ngIf="enrollForm?.get('Password')?.errors?.Password">
+                    This value is mandatory
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput type="password" placeholder="Confirm password" formControlName="ConfirmPassword">
+                <mat-error>
+                    <span *ngIf="enrollForm?.get('ConfirmPassword')?.errors?.required">This value is mandatory</span>
+                    <span *ngIf="enrollForm?.get('ConfirmPassword')?.errors?.invalid">Password and Confirm password must
+                        match</span>
+                </mat-error>
+            </mat-form-field>
+        </ng-container>
+
+        <div>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!enrollForm.valid">Submit
+            </button>
+        </div>
+
+    </form>
+</div>

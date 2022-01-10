@@ -11,7 +11,9 @@ import { BookEffects } from './state/book/book.effects';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FooterModule } from './footer/footer.module';
-
+import { AuthReducer } from './state/auth/auth.reducers';
+import { CachingService } from './shared/caching.service';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,11 +24,14 @@ import { FooterModule } from './footer/footer.module';
     AppRoutingModule,
     CommonModule,
     FooterModule,
-    StoreModule.forRoot({ books: BooksReducer }),
+    StoreModule.forRoot({ books: BooksReducer, auth: AuthReducer }),
     EffectsModule.forRoot([BookEffects]),
-    HttpClientModule
+    HttpClientModule,
+    StoreDevtoolsModule.instrument({
+      maxAge: 5
+    })
   ],
-  providers: [],
+  providers: [CachingService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

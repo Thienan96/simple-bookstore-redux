@@ -1,4 +1,8 @@
 <!-- attach google map -->
 <div style="width: 100%; height: 400px; background-color: aqua;">
-    <google-map></google-map>
+    <google-map height="300px" [center]="center" width="300px">
+        <map-marker *ngFor="let marker of markers" [position]="marker.position" [label]="marker.label"
+            [title]="marker.title" [options]="marker.options">
+        </map-marker>
+    </google-map>
 </div>

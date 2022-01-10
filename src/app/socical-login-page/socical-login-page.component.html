@@ -1,0 +1,16 @@
+<div *ngIf='!(userLogined$ | async); else additionalInfo' fxFill fxLayout="column" fxLayoutAlign="start stretch">
+    <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" color='primary'>
+        <div fxLayout="row" fxFill fxLayoutAlign="space-between center">
+            <div fxLayout="row" [style.width.%]='100'>Sign in to website</div>
+            <button mat-icon-button (click)='close()'>
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </mat-toolbar>
+    <app-login (loginSucess)='close()'></app-login>
+    Or sign in with <button type="button" (click)="loginWithGoogle()" mat-button>Google</button>
+</div>
+
+<ng-template #additionalInfo>
+    <app-enroll-form [initData]='userLogined$ | async'></app-enroll-form>
+</ng-template>

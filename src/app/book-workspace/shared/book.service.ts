@@ -12,13 +12,13 @@ export class BooksService {
     getBookList(): Observable<Array<IBook>> {
         return this.http
             .get<{ items: IBook[] }>(
-                'https://www.googleapis.com/books/v1/volumes?q=+subject:Manga'
+                'https://www.googleapis.com/books/v1/volumes?q=+subject:Manga&maxResults=40'
             )
             .pipe(map((books) => books.items || []));
     }
 
     searchBookList(queryCondition: any): Observable<Array<IBook>> {
-        let url = 'https://www.googleapis.com/books/v1/volumes?q=+subject:Manga';
+        let url = 'https://www.googleapis.com/books/v1/volumes?q=+subject:Manga&maxResults=40';
         if (queryCondition.intitle) {
             url += `+intitle:${queryCondition.intitle}`;
         }

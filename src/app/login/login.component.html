@@ -1,0 +1,23 @@
+<div *ngIf='invalidUser' style="color: red;">Invalid username or password</div>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)" fxLayout='column' class='form'>
+
+    <mat-form-field>
+        <input matInput placeholder="User name" formControlName="Username">
+        <mat-error *ngIf="loginForm?.get('Username')?.errors?.required">
+            This value is mandatory
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput type="password" placeholder="Password" formControlName="Password">
+        <mat-error *ngIf="loginForm?.get('Password')?.errors?.Password">
+            This value is mandatory
+        </mat-error>
+    </mat-form-field>
+
+    <div>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">Submit
+        </button>
+    </div>
+
+</form>

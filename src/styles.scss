@@ -15,3 +15,11 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+.mat-dialog-container {
+  padding: 0px !important;
+}
+
+.form {
+  padding: 16px;
+}

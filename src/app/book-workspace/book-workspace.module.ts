@@ -26,6 +26,8 @@ import { CachingService } from '../shared/caching.service';
 import { CartComponent } from './cart/cart.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import { SocicalLoginPageModule } from '../socical-login-page/socical-login-page.module';
+import { EnrollFormModule } from '../enroll-form/enroll-form.module';
 const routes: Routes = [
   {
     path: '',
@@ -41,33 +43,34 @@ const routes: Routes = [
   },
 ];
 @NgModule({
-  declarations: [
-    BookWorkspaceComponent,
-    BookListComponent,
-    BookCardComponent,
-    BookAuthorsComponent,
-    BookDetailComponent,
-    CartComponent,
-    ConfirmDialogComponent
-  ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    EffectsModule.forFeature([BookEffects]),
-    MatCardModule,
-    FlexLayoutModule,
-    MatToolbarModule,
-    MatInputModule,
-    FormsModule,
-    MatCheckboxModule,
-    MatRadioModule,
-    MatButtonModule,
-    MatIconModule,
-    MatBadgeModule,
-    MatDialogModule
-  ],
-  providers: [BooksService, CachingService],
-  bootstrap: [],
-  entryComponents: [ConfirmDialogComponent]
+    declarations: [
+        BookWorkspaceComponent,
+        BookListComponent,
+        BookCardComponent,
+        BookAuthorsComponent,
+        BookDetailComponent,
+        CartComponent,
+        ConfirmDialogComponent
+    ],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        EffectsModule.forFeature([BookEffects]),
+        MatCardModule,
+        FlexLayoutModule,
+        MatToolbarModule,
+        MatInputModule,
+        FormsModule,
+        MatCheckboxModule,
+        MatRadioModule,
+        MatButtonModule,
+        MatIconModule,
+        MatBadgeModule,
+        MatDialogModule,
+        SocicalLoginPageModule,
+        EnrollFormModule
+    ],
+    providers: [BooksService, CachingService],
+    bootstrap: []
 })
 export class BookWorkspaceModule { }

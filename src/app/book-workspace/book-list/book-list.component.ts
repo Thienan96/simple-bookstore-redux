@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { IAppState } from 'src/app/state/app.state';
+import { BookState } from 'src/app/state/app.state';
 import { getBookList } from 'src/app/state/book/book.action';
 import { selectBooks } from 'src/app/state/book/book.selectors';
 
@@ -12,7 +12,7 @@ import { selectBooks } from 'src/app/state/book/book.selectors';
 })
 export class BookListComponent implements OnInit {
   books$ = this.store.pipe(select(selectBooks));
-  constructor(private store: Store<IAppState>, private route: ActivatedRoute) { }
+  constructor(private store: Store<BookState>, private route: ActivatedRoute) { }
   ngOnInit(): void {
   }
 

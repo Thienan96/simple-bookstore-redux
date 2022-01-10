@@ -37,32 +37,16 @@ export class CartComponent implements OnInit {
     var d = new Date();
     var m = d.getMonth();
     let factor = 1;
-    if (m === 8) {
-      switch (x) {
-        case 'Motorbike':
-          factor = 1.5;
-          break;
-        case 'Train':
-          factor = 1.8;
-          break;
-        case 'AirCraft':
-          factor = 2;
-          break;
-      }
-    } else {
-      if (m >= 5 && m <= 7) {
-        switch (x) {
-          case 'Motorbike':
-            factor = 0.5;
-            break;
-          case 'Train':
-          case 'AirCraft':
-            factor = 0.8;
-            break;
-          default:
-            break;
-        }
-      }
+    switch (x) {
+      case 'Motorbike':
+        factor = 1.5;
+        break;
+      case 'Train':
+        factor = 1.8;
+        break;
+      case 'AirCraft':
+        factor = 2;
+        break;
     }
     return factor;
   }

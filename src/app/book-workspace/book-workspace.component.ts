@@ -1,9 +1,14 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { fromEvent } from 'rxjs';
 import { map, filter, debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { IAppState } from '../state/app.state';
+import { EnrollFormComponent } from '../enroll-form/enroll-form.component';
+import { SocicalLoginPageComponent } from '../socical-login-page/socical-login-page.component';
+import { BookState } from '../state/app.state';
+import { logout } from '../state/auth/auth.actions';
+import { selectAuth } from '../state/auth/auth.selector';
 import { getBookList, searchBookTitle } from '../state/book/book.action';
 
 @Component({
@@ -14,8 +19,10 @@ import { getBookList, searchBookTitle } from '../state/book/book.action';
 export class BookWorkspaceComponent implements OnInit {
   seachText: string;
   selectedAuthor: string;
+  userLogined$ = this.store.pipe(select(selectAuth));
   @ViewChild('searchInput', { static: true }) searchInput: ElementRef;
-  constructor(private store: Store<IAppState>,
+  constructor(private store: Store<BookState>,
+    public dialog: MatDialog,
     private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -57,5 +64,25 @@ export class BookWorkspaceComponent implements OnInit {
       queryParams = { ...queryParams, inauthor: inauthor }
     }
     this.router.navigate(['/'], { queryParams });
+  }
+
+  login(): void {
+    const dialogRef = this.dialog.open(SocicalLoginPageComponent, {
+      width: '250px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  logout() {
+    this.store.dispatch(logout())
+  }
+
+  signUp() {
+    const dialogRef = this.dialog.open(EnrollFormComponent, {
+      width: '350px',
+    });
   }
 }
