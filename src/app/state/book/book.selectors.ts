@@ -15,6 +15,11 @@ export const selectBooks = createSelector(
   (state: BookState) => state.books
 );
 
+export const selectBooksVisitRecently = createSelector(
+  getBookState,
+  (state: BookState) => state.booksVistRecently
+);
+
 export const selectBookAuthors = createSelector(
   getBookState,
   (state: BookState) => {

@@ -19,7 +19,7 @@ export class AuthEffects {
                 map((payload) => {
                     if (payload) {
                         // this.cachingService.localStorage.store(`userId`, payload.id);
-                        this.cachingService.localStorage.store(`authInfor`, payload);
+                        this.cachingService.localStorage.store(`userInfor`, payload);
                         return AuthActions.loginSucess({ payload });
                     } else {
                         return AuthActions.loginFailed({ payload })
@@ -36,10 +36,15 @@ export class AuthEffects {
             .pipe(
                 concatMap(() => this.socialAuthService.authState),
                 map((payload) => {
-                    this.cachingService.localStorage.removeAll();
+                    this.cachingService.localStorage.remove('userInfor');
                     return AuthActions.logoutSucess();
                 }),
-                catchError((payload) => of(AuthActions.logoutFailed({ payload })))
+                catchError((payload) => {
+                    // incase user not login by scocial accout
+                    this.cachingService.localStorage.remove('userInfor');
+                    this.store.dispatch(AuthActions.logoutSucess())
+                    return of(AuthActions.logoutFailed({ payload }));
+                })
             ))
     )
     );
@@ -47,6 +52,6 @@ export class AuthEffects {
         private actions$: Actions,
         private cachingService: CachingService,
         private socialAuthService: SocialAuthService,
-        private store: Store<BookState>
+        private store: Store
     ) { }
 }

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { CachingService } from 'src/app/shared/caching.service';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { CartService } from 'src/app/shared/cart.service';
 import { ICart, IItem } from '../shared/book.model';
 
 @Component({
@@ -20,8 +23,13 @@ export class CartComponent implements OnInit {
   factorForAirCraft: number;
   deliveryCost: number;
   deliveryBy: string = 'Motorbike';
-
-  constructor(private cachingService: CachingService, public dialog: MatDialog) { }
+  form: FormGroup;
+  constructor(public dialog: MatDialog,
+    private _cartService: CartService,
+    private _fb: FormBuilder,
+    private _snackBar: MatSnackBar,
+    private _router: Router,
+    private _cachingService: CachingService) { }
 
   ngOnInit(): void {
     this.cart = this.getCart();
@@ -31,22 +39,46 @@ export class CartComponent implements OnInit {
       this.factorForAirCraft = this.computeFactor('AirCraft');
       this.chooseDelivery('Motorbike');
     }
+    const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    const userInfor = this._cachingService.localStorage.get('userInfor');
+    this.form = this._fb.group({
+      Username: [userInfor?.name || userInfor?.Username, Validators.required],
+      Email: [userInfor?.email || userInfor?.Email, [Validators.required, Validators.pattern(emailregex)]],
+      Phone: [userInfor.Phone || '', Validators.required],
+      Address: [userInfor.Address || '', Validators.required],
+    });
   }
 
   computeFactor(x: 'Motorbike' | 'Train' | 'AirCraft') {
     var d = new Date();
     var m = d.getMonth();
     let factor = 1;
-    switch (x) {
-      case 'Motorbike':
-        factor = 1.5;
-        break;
-      case 'Train':
-        factor = 1.8;
-        break;
-      case 'AirCraft':
-        factor = 2;
-        break;
+    if (m === 8) {
+      switch (x) {
+        case 'Motorbike':
+          factor = 1.5;
+          break;
+        case 'Train':
+          factor = 1.8;
+          break;
+        case 'AirCraft':
+          factor = 2;
+          break;
+      }
+    } else {
+      if (m >= 5 && m <= 7) {
+        switch (x) {
+          case 'Motorbike':
+            factor = 0.5;
+            break;
+          case 'Train':
+          case 'AirCraft':
+            factor = 0.8;
+            break;
+          default:
+            break;
+        }
+      }
     }
     return factor;
   }
@@ -54,13 +86,14 @@ export class CartComponent implements OnInit {
 
 
   getCart(): ICart {
-    return this.cachingService.localStorage.get('Cart');
+    return this._cartService.getCart();
   }
 
   add(item: IItem) {
     item.Amount += 1;
     const index = this.cart.Items.findIndex(i => i.Item.id === item.Item.id);
     this.cart.Items[index] = item;
+    this._cartService.updateAmount(item.Item, item.Amount);
     this.computeTotal();
   }
 
@@ -69,16 +102,28 @@ export class CartComponent implements OnInit {
       item.Amount -= 1;
       const index = this.cart.Items.findIndex(i => i.Item.id === item.Item.id);
       this.cart.Items[index] = item;
+      this._cartService.updateAmount(item.Item, item.Amount);
       this.computeTotal();
     }
+  }
+
+  clear(item: IItem) {
+    this._cartService.removeToCart(item.Item);
+    this.cart = {
+      ...this.cart,
+      Items: this.cart.Items.filter(i => i.Item.id !== item.Item.id)
+    }
+    this.computeTotal();
   }
 
   computeTotal() {
     this.total = 0;
     this.cart.Items.forEach(i => {
-      this.total += i.Amount * 25
+      this.total += i.Amount * 25;
     });
-    this.total += this.deliveryCost;
+    if (this.total) {
+      this.total += this.deliveryCost;
+    }
   }
 
   chooseDelivery(event: string) {
@@ -98,11 +143,19 @@ export class CartComponent implements OnInit {
   }
 
   checkOut() {
-    this.dialog.open(ConfirmDialogComponent, {
-      width: '250px',
-      height: 'auto',
-      data: { TotalPrice: this.total, deliveryBy: this.deliveryBy },
-      disableClose: true
-    });
+    this.form.markAllAsTouched();
+    if (this.form.invalid || this.cart.Items.length === 0) return;
+    const cartHistory = this._cachingService.localStorage.get('cartHistory') || [];
+    this._cachingService.localStorage.store('cartHistory', [...cartHistory, {
+      id: Math.floor(Math.random() * 100) + 1,
+      cart: this.cart,
+      user: this.form.value,
+      date: new Date(),
+      deliveryBy: this.deliveryBy,
+      total: this.total
+    }]);
+    this._snackBar.open('Your order is processing', '', { duration: 2000 })
+    this._router.navigate(['/']);
+    this._cartService.clearCart();
   }
 }

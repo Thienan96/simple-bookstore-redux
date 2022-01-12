@@ -1,13 +1,4 @@
-<mat-toolbar color="primary" style="height: 100px">
-    <div fxFill fxLayout="row" style="padding: 0 15%;" fxLayoutAlign=" center">
-        <mat-form-field fxFlex>
-            <input #searchInput disabled matInput type="text">
-        </mat-form-field>
-        <button mat-icon-button matBadgePosition="after" matBadgeColor="accent" [routerLink]="['/shopping-cart']">
-            <mat-icon>add_shopping_cart</mat-icon>
-        </button>
-    </div>
-</mat-toolbar>
+<app-toolbar></app-toolbar>
 <div style="padding: 20px 15%;" fxLayout='row'>
     <ng-container *ngIf='cart'>
         <div fxFlex='70' fxLayout='column'>
@@ -25,6 +16,9 @@
                         <input style="border: 1px solid; width: 50px;" [value]='item?.Amount' matInput type="number">
                         <button mat-icon-button color="primary" (click)='remove(item)'>
                             <mat-icon>remove</mat-icon>
+                        </button>
+                        <button mat-icon-button color="primary" (click)='clear(item)'>
+                            <mat-icon>delete</mat-icon>
                         </button>
                     </div>
                 </div>
@@ -52,6 +46,42 @@
                 <span>Cost: {{constForAircraft}}$</span>
                 <span>Factor: {{factorForAirCraft}}</span>
             </div>
+
+            <form [formGroup]="form" fxLayout='column' class='form'>
+
+                <mat-form-field>
+                    <input matInput placeholder="Email" formControlName="Email" required>
+                    <mat-error>
+                        <span *ngIf="form?.get('Email')?.errors?.required">This value is mandatory</span>
+                        <span *ngIf="form?.get('Email')?.errors?.pattern">Wrong format</span>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="User name" formControlName="Username">
+                    <mat-error *ngIf="form?.get('Username')?.errors?.required">
+                        This value is mandatory
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="Phone" formControlName="Phone">
+                    <mat-error *ngIf="form?.get('Phone')?.errors?.required">
+                        This value is mandatory
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="Address" formControlName="Address">
+                    <mat-error *ngIf="form?.get('Address')?.errors?.required">
+                        This value is mandatory
+                    </mat-error>
+                </mat-form-field>
+            </form>
+
+            <!-- information user -->
+
+
             <button mat-raised-button color="primary" (click)='checkOut()'>Check out</button>
 
         </div>

@@ -54,10 +54,10 @@ export class EnrollFormComponent implements OnInit {
     };
   }
 
-
   onSubmit(value: any) {
-    // user information uses for auto fill infor when checking out
-    this._cachingService.localStorage.store('userInfor', value);
+    // user information uses for auto fill infor when checking out\
+    const userList = this._cachingService.localStorage.get('UserList') || [];
+    this._cachingService.localStorage.store('UserList', [...userList, value]);
     this.close();
     this._snackBar.open('Registrion successfully', 'Ok', {
       duration: 5000

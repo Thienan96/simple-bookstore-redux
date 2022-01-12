@@ -1,8 +1,24 @@
 <!-- attach google map -->
-<div style="width: 100%; height: 400px; background-color: aqua;">
+<div fxLayoutAlign="start center" fxLayout='row' style=" height: 400px; background-color: #f8f8f8; padding: 0 15%;">
     <google-map height="300px" [center]="center" width="300px">
         <map-marker *ngFor="let marker of markers" [position]="marker.position" [label]="marker.label"
             [title]="marker.title" [options]="marker.options">
         </map-marker>
     </google-map>
+    <div fxLayout='column' style=" margin-left: 30px;">
+        <h4>Book store</h4>
+        <div fxLayout='row' fxLayoutAlign="start center" fxLayoutGap='15px'>
+            <mat-icon>place</mat-icon>
+            <Address>18D Đoàn Nguyễn Tuấn, Tân Quý Tây, Bình Chánh, Thành phố Hồ Chí Minh, Vietnam</Address>
+        </div>
+        <div fxLayout='row' fxLayoutAlign="start center" fxLayoutGap='15px'>
+            <mat-icon>phone</mat-icon>
+            <span>+842822212909</span>
+        </div>
+        <div fxLayout='row' fxLayoutAlign="start center" fxLayoutGap='15px'>
+            <mat-icon>schedule</mat-icon>
+            <span>8:00-22:00</span>
+        </div>
+
+    </div>
 </div>

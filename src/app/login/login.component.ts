@@ -31,12 +31,12 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(value: any) {
-    const userRigisted = this._cachingService.localStorage.get('userInfor');
-    if (userRigisted) {
-      if (value.Username === userRigisted.Username && value.Password === userRigisted.Password) {
-        this._store.dispatch(loginSucess({ payload: userRigisted }));
-        this.loginSucess.emit();
-      }
+    const userRigisted = <Array<any>>this._cachingService.localStorage.get('UserList') || [];
+    const index = userRigisted.findIndex(u => u.Username === value.Username && value.Password === u.Password)
+    if (userRigisted && index > -1) {
+      this._cachingService.localStorage.store('userInfor', userRigisted[index]);
+      this._store.dispatch(loginSucess({ payload: userRigisted[index] }));
+      this.loginSucess.emit();
     } else {
       this.invalidUser = true;
     }

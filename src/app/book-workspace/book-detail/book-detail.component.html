@@ -1,14 +1,5 @@
-<mat-toolbar color="primary" style="height: 100px">
-    <div fxFill fxLayout="row" style="padding: 0 15%;" fxLayoutAlign=" center">
-        <mat-form-field fxFlex>
-            <input #searchInput disabled matInput type="text">
-        </mat-form-field>
-        <button mat-icon-button matBadgePosition="after" matBadgeColor="accent" [routerLink]="['/shopping-cart']">
-            <mat-icon>add_shopping_cart</mat-icon>
-        </button>
-    </div>
-</mat-toolbar>
-<div fxFill fxLayout="row" style="padding: 20px 15%;">
+<app-toolbar></app-toolbar>
+<div *ngIf='book$ | async as book' fxFill fxLayout="row" style="padding: 20px 15%;">
     <div fxFlex='20'>
         <img [style.width.%]='85' [src]="book?.volumeInfo?.imageLinks?.thumbnail">
     </div>
@@ -29,7 +20,7 @@
             </button>
         </div>
         <div>
-            <button fxFlex='50' mat-raised-button color="primary" (click)='addToCart()'>Add To Cart</button>
+            <button fxFlex='50' mat-raised-button color="primary" (click)='addToCart(book)'>Add To Cart</button>
         </div>
     </div>
 </div>

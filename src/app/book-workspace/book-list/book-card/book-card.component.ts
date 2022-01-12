@@ -1,5 +1,6 @@
 import { Input } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
+import { CartService } from 'src/app/shared/cart.service';
 import { IBook } from '../../shared/book.model';
 
 @Component({
@@ -9,10 +10,16 @@ import { IBook } from '../../shared/book.model';
 })
 export class BookCardComponent implements OnInit {
   @Input() book?: IBook;
+  @Input() showBtnAddToCart: boolean = true;
 
-  constructor() { }
+  constructor(private _cartService: CartService) { }
 
   ngOnInit(): void {
+  }
+
+  addToCart() {
+    if (!this.book) return;
+    this._cartService.addToCart(this.book, 1);
   }
 
 }

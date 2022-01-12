@@ -11,46 +11,40 @@ export class FooterComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    navigator.geolocation.getCurrentPosition((position) => {
-      this.center = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      }
-      this.markers.push({
-        position: {
-          lat: this.center.lat + ((Math.random() - 0.5) * 2) / 10,
-          lng: this.center.lng + ((Math.random() - 0.5) * 2) / 10,
-        },
-        label: {
-          color: 'lightgray',
-          text: 'Shop here' + (this.markers.length + 1),
-        },
-        options: { animation: google.maps.Animation.BOUNCE },
+    // navigator.geolocation.getCurrentPosition((position) => {
+    //   this.center = {
+    //     lat: position.coords.latitude,
+    //     lng: position.coords.longitude,
+    //   }
+    //   this.markers.push({
+    //     position: {
+    //       lat: 10.673513248593828,
+    //       lng: 106.58188900991618,
+    //     },
+    //     label: {
+    //       color: 'lightgray',
+    //       text: 'Shop here' + (this.markers.length + 1),
+    //     },
+    //     options: { animation: google.maps.Animation.BOUNCE },
+    //   },
+    //   )
+    // })
+    this.center = {
+      lat: 10.673513248593828,
+      lng: 106.58188900991618,
+    }
+    this.markers.push({
+      position: {
+        lat: 10.673513248593828,
+        lng: 106.58188900991618,
       },
-      {
-        position: {
-          lat: this.center.lat + ((Math.random() - 0.5) * 2) / 10,
-          lng: this.center.lng + ((Math.random() - 0.5) * 2) / 10,
-        },
-        label: {
-          color: 'lightgray',
-          text: 'Shop here ' + (this.markers.length + 1),
-        },
-        options: { animation: google.maps.Animation.BOUNCE },
+      label: {
+        color: 'lightgray',
+        text: 'Shop here' + (this.markers.length + 1),
       },
-      {
-        position: {
-          lat: this.center.lat + ((Math.random() - 0.5) * 2) / 10,
-          lng: this.center.lng + ((Math.random() - 0.5) * 2) / 10,
-        },
-        label: {
-          color: 'lightgray',
-          text: 'Marker label ' + (this.markers.length + 1),
-        },
-        title: 'Shop here ' + (this.markers.length + 1),
-        options: { animation: google.maps.Animation.BOUNCE },
-      })
-    })
+      options: { animation: google.maps.Animation.BOUNCE },
+    },
+    )
   }
 
 }

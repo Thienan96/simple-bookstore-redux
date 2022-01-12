@@ -9,22 +9,14 @@ import { IBook } from './book.model';
 export class BooksService {
     constructor(private http: HttpClient) { }
 
-    getBookList(): Observable<Array<IBook>> {
-        return this.http
-            .get<{ items: IBook[] }>(
-                'https://www.googleapis.com/books/v1/volumes?q=+subject:Manga&maxResults=40'
-            )
-            .pipe(map((books) => books.items || []));
-    }
-
-    searchBookList(queryCondition: any): Observable<Array<IBook>> {
-        let url = 'https://www.googleapis.com/books/v1/volumes?q=+subject:Manga&maxResults=40';
-        if (queryCondition.intitle) {
+    getBookList(queryCondition?: any): Observable<Array<IBook>> {
+        let url = 'https://www.googleapis.com/books/v1/volumes?maxResults=40&q=+subject=Manga';
+        if (queryCondition && queryCondition.intitle) {
             url += `+intitle:${queryCondition.intitle}`;
         }
-        if (queryCondition.inauthor) {
-            url += `+inauthor:${queryCondition.inauthor}`;
-        }
+        // if (queryCondition.inauthor) {
+        //     url += `+inauthor:${queryCondition.inauthor}`;
+        // }
         return this.http
             .get<{ items: IBook[] }>(url)
             .pipe(map((books) => books.items || []));

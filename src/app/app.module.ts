@@ -14,12 +14,14 @@ import { FooterModule } from './footer/footer.module';
 import { AuthReducer } from './state/auth/auth.reducers';
 import { CachingService } from './shared/caching.service';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { FlexLayoutModule } from '@angular/flex-layout';
 @NgModule({
   declarations: [
     AppComponent,
   ],
   imports: [
     BrowserModule,
+    FlexLayoutModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     CommonModule,

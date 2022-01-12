@@ -13,7 +13,7 @@ import { BookCardComponent } from './book-list/book-card/book-card.component';
 import {MatCardModule} from '@angular/material/card';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BookAuthorsComponent } from './book-authors/book-authors.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
@@ -24,10 +24,12 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatBadgeModule} from '@angular/material/badge';
 import { CachingService } from '../shared/caching.service';
 import { CartComponent } from './cart/cart.component';
-import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
-import { SocicalLoginPageModule } from '../socical-login-page/socical-login-page.module';
-import { EnrollFormModule } from '../enroll-form/enroll-form.module';
+import { ToolbarModule } from '../toolbar/toolbar.module';
+import { CartService } from '../shared/cart.service';
+import { AuthGuardService } from '../shared/auth-guard.service';
+import { VisitRecentlyComponent } from './visit-recently/visit-recently.component';
+import { HistoryOrderComponent } from './history-order/history-order.component';
 const routes: Routes = [
   {
     path: '',
@@ -39,7 +41,13 @@ const routes: Routes = [
   },
   {
     path: 'shopping-cart',
+    canActivate: [AuthGuardService],
     component: CartComponent,
+  },
+  {
+    path: 'history-order',
+    canActivate: [AuthGuardService],
+    component: HistoryOrderComponent,
   },
 ];
 @NgModule({
@@ -50,7 +58,8 @@ const routes: Routes = [
         BookAuthorsComponent,
         BookDetailComponent,
         CartComponent,
-        ConfirmDialogComponent
+        VisitRecentlyComponent,
+        HistoryOrderComponent
     ],
     imports: [
         CommonModule,
@@ -61,16 +70,16 @@ const routes: Routes = [
         MatToolbarModule,
         MatInputModule,
         FormsModule,
+        ReactiveFormsModule,
         MatCheckboxModule,
         MatRadioModule,
         MatButtonModule,
         MatIconModule,
         MatBadgeModule,
         MatDialogModule,
-        SocicalLoginPageModule,
-        EnrollFormModule
+        ToolbarModule
     ],
-    providers: [BooksService, CachingService],
+    providers: [BooksService, CachingService, CartService],
     bootstrap: []
 })
 export class BookWorkspaceModule { }

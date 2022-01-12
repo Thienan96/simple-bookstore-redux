@@ -1,0 +1,29 @@
+<mat-toolbar color="primary">
+    <div fxLayout="row" style="padding: 0 15%; width: 100%;" fxLayoutAlign="start center">
+        <h2 [routerLink]="['/']" style="cursor: pointer;">Book Store</h2>
+        <div fxFlex class='search-box-wrapper'>
+            <input class='search-box' fxFlex #searchInput fxFlex matInput type="text" [(ngModel)]='seachText'>
+        </div>
+        <ng-container *ngIf='!(userLogined$ | async)'>
+            <button mat-stroked-button (click)='login()' matBadgeColor="accent">
+                Login
+            </button>
+            <button mat-stroked-button (click)='signUp()' matBadgeColor="accent">
+                Sign up
+            </button>
+        </ng-container>
+        <div *ngIf='userLogined$ | async as user'>
+            hello {{user.name || user.Username}}
+            <button [matMenuTriggerFor]="menu" mat-icon-button>
+                <mat-icon>person</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item [routerLink]="['/history-order']">History</button>
+                <button mat-menu-item (click)='logout()'>Log out</button>
+              </mat-menu>
+        </div>
+        <button mat-icon-button matBadgePosition="after" matBadgeColor="accent" [routerLink]="['/shopping-cart']">
+            <mat-icon matBadge="{{ itemsOnCart$ | async }}" matBadgeColor="warn">add_shopping_cart</mat-icon>
+        </button>
+    </div>
+</mat-toolbar>

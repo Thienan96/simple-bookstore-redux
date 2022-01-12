@@ -2,7 +2,8 @@ import { createAction, props } from '@ngrx/store';
 import { IBook } from 'src/app/book-workspace/shared/book.model';
 
 export const getBookList = createAction(
-    '[GET_BOOK_LIST] Get Book List'
+    '[GET_BOOK_LIST] Get Book List',
+    props<{ QueryCondition: {} }>()
 );
 
 export const getBookListSucess = createAction(
@@ -12,21 +13,6 @@ export const getBookListSucess = createAction(
 
 export const getBookListFailed = createAction(
     '[GET_BOOK_LIST_FAILED] Get Book List Failed',
-    props<{ Error: any }>()
-);
-
-export const searchBookTitle = createAction(
-    '[SEARCH_BOOK_TITLE] Search Book Title',
-    props<{ QueryCondition: {} }>()
-);
-
-export const searchBookTitleSucess = createAction(
-    '[SEARCH_BOOK_TITLE_SUCCESS] Search Book Title Success',
-    props<{ Book: Array<IBook> }>()
-);
-
-export const searchBookTitleFailed = createAction(
-    '[SEARCH_BOOK_TITLE_FAILED] Search Book Title Failed',
     props<{ Error: any }>()
 );
 
@@ -43,5 +29,10 @@ export const getBookDetailSucess = createAction(
 export const getBookDetailFailed = createAction(
     '[GET_BOOK_DETAIL_FAILED] Get Book Detail Failed',
     props<{ Error: any }>()
+);
+
+export const visitBook = createAction(
+    '[VISIT_BOOK] Vist Book',
+    props<{ Book: IBook }>()
 );
 

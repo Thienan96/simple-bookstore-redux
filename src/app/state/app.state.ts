@@ -2,6 +2,7 @@ import { IBook } from "../book-workspace/shared/book.model";
 
 export interface BookState {
   books: Array<IBook>;
+  booksVistRecently: IBook[];
 }
 
 export interface AuthState {

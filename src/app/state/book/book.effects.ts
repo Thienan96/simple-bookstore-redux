@@ -12,7 +12,7 @@ export class BookEffects {
 
     getBook$ = createEffect(() => this.actions$.pipe(
         ofType(BookActions.getBookList),
-        mergeMap(() => this.booksService.getBookList()
+        mergeMap((action) => this.booksService.getBookList(action?.QueryCondition)
             .pipe(
                 map((Book) => BookActions.getBookListSucess({ Book })),
                 catchError((Error) => of(BookActions.getBookListFailed({ Error })))
@@ -20,15 +20,6 @@ export class BookEffects {
     )
     );
     
-    searchBook$ = createEffect(() => this.actions$.pipe(
-        ofType(BookActions.searchBookTitle),
-        mergeMap(action => this.booksService.searchBookList(action.QueryCondition)
-            .pipe(
-                map((Book) => BookActions.searchBookTitleSucess({ Book })),
-                catchError((Error) => of(BookActions.searchBookTitleFailed({ Error })))
-            ))
-    )
-    );
     constructor(
         private actions$: Actions,
         private booksService: BooksService,

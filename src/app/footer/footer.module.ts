@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { MatIconModule } from '@angular/material/icon';
 import { FooterComponent } from './footer.component';
 
 @NgModule({
@@ -11,7 +12,8 @@ import { FooterComponent } from './footer.component';
   imports: [
       CommonModule,
       FlexLayoutModule,
-      GoogleMapsModule
+      GoogleMapsModule,
+      MatIconModule
   ],
   exports: [FooterComponent],
   providers: [],

@@ -1,0 +1,33 @@
+<app-toolbar></app-toolbar>
+<div style="padding: 20px 15%;" fxLayout='row'>
+    <div *ngIf='cartHistory.length === 0'>You don't have any order before</div>
+    <div *ngFor='let item of cartHistory; let i = index' style="width: 100%;" fxLayout='row' fxLayoutGap='15px'>
+        <div class='row-item' fxFlex='70' fxLayout='column'>
+            <div fxLayout='column' fxLayoutAlign="start start">
+                <div fxLayout='row'>
+                    <b>{{i + 1}}:&nbsp;</b>
+                    <span>{{item.date | date}}</span>
+                </div>
+                <div style="width: 100%;" *ngFor='let i of item.cart.Items' fxLayout='row'
+                    fxLayoutAlign="space-between center">
+                    <span>{{ i.Item.volumeInfo.title }}</span>
+                    <span>Amount: {{i.Amount}}</span>
+                </div>
+                <div style="width: 100%;" fxLayout='row'
+                    fxLayoutAlign="space-between center">
+                    <div></div>
+                    <span>Total: {{item.total}}$</span>
+                </div>
+            </div>
+        </div>
+        <div fxFlex='30' class='row-item' fxLayout='column'>
+            <div>Delivery by: {{item.deliveryBy}}</div>
+            <div>Name: {{item.user.Username}} </div>
+            <div>Email: {{item.user.Email}}</div>
+            <div>Phone: {{item.user.Phone}}</div>
+            <div>Address: {{item.user.Address}}</div>
+            <button style="width: fit-content;" color='primary' mat-raised-button (click)='reOrder(item)'>Re
+                order</button>
+        </div>
+    </div>
+</div>

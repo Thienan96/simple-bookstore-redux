@@ -17,9 +17,9 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const authInfor = this._cachedService.localStorage.get(`authInfor`);
-    if (authInfor) {
-      this.store.dispatch(loginSucess({payload: authInfor}));
+    const userInfor = this._cachedService.localStorage.get(`userInfor`);
+    if (userInfor) {
+      this.store.dispatch(loginSucess({payload: userInfor}));
     }
   }
 }
