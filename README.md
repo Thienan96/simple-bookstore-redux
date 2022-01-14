@@ -1,8 +1,10 @@
 # BookStore
 
 Angular version 13.1.1
+
 Node version 14.15.4
-npm 6.14.10
+
+Npm 6.14.10
 
 ## Install package
 Run `npm i` to install necessary lirabies
@@ -31,7 +33,7 @@ Simple bookstore using ngrx to build and manage state in app and using localStor
 
 Using api from google book api (https://developers.google.com/books) to get list book/search book
 
-App is deployed into firebase
+Using firebase for deployment
 
 ## Funtionalities
 
