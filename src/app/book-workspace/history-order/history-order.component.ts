@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CachingService } from 'src/app/shared/caching.service';
 
 @Component({
@@ -8,12 +9,15 @@ import { CachingService } from 'src/app/shared/caching.service';
 })
 export class HistoryOrderComponent implements OnInit {
   cartHistory: any[];
-  constructor(private _cachingService: CachingService) { }
+  constructor(private _cachingService: CachingService, private _router: Router) { }
 
   ngOnInit(): void {
-    this.cartHistory = this._cachingService.localStorage.get('cartHistory') || [];
+    const userInfor = this._cachingService.localStorage.get('userInfor');
+    this.cartHistory = this._cachingService.localStorage.get(`cartHistory${userInfor.Id}`) || [];
   }
 
-  reOrder(item: any) {}
+  reOrder(item: any) {
+    this._router.navigate(['/shopping-cart'], { queryParams: { cartid: item.id } });
+  }
 
 }

@@ -1,5 +1,5 @@
 <app-toolbar></app-toolbar>
-<div style="padding: 20px 15%;" fxLayout='row'>
+<div style="padding: 20px 15%;" fxLayout='column'>
     <div *ngIf='cartHistory.length === 0'>You don't have any order before</div>
     <div *ngFor='let item of cartHistory; let i = index' style="width: 100%;" fxLayout='row' fxLayoutGap='15px'>
         <div class='row-item' fxFlex='70' fxLayout='column'>
@@ -13,8 +13,7 @@
                     <span>{{ i.Item.volumeInfo.title }}</span>
                     <span>Amount: {{i.Amount}}</span>
                 </div>
-                <div style="width: 100%;" fxLayout='row'
-                    fxLayoutAlign="space-between center">
+                <div style="width: 100%;" fxLayout='row' fxLayoutAlign="space-between center">
                     <div></div>
                     <span>Total: {{item.total}}$</span>
                 </div>

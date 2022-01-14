@@ -7,10 +7,18 @@ describe('FooterComponent', () => {
   let fixture: ComponentFixture<FooterComponent>;
 
   beforeEach(async () => {
+    window.google = window.google || {
+      maps: {
+        Map: function () { },
+        Animation: {
+          BOUNCE: 0
+        } 
+      }
+    };
     await TestBed.configureTestingModule({
-      declarations: [ FooterComponent ]
+      declarations: [FooterComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

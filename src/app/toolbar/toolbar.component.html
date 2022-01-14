@@ -18,6 +18,7 @@
                 <mat-icon>person</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)='viewProfile()'>Profile</button>
                 <button mat-menu-item [routerLink]="['/history-order']">History</button>
                 <button mat-menu-item (click)='logout()'>Log out</button>
               </mat-menu>

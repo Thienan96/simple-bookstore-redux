@@ -9,7 +9,6 @@ import { CartService } from '../shared/cart.service';
 import { SocicalLoginPageComponent } from '../socical-login-page/socical-login-page.component';
 import { logout } from '../state/auth/auth.actions';
 import { selectAuth } from '../state/auth/auth.selector';
-
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
@@ -77,6 +76,13 @@ export class ToolbarComponent implements OnInit {
   signUp() {
     const dialogRef = this.dialog.open(EnrollFormComponent, {
       width: '350px',
+    });
+  }
+
+  viewProfile() {
+    const dialogRef = this.dialog.open(EnrollFormComponent, {
+      width: '350px',
+      data: { action: 'update-profile' }
     });
   }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CachingService } from 'src/app/shared/caching.service';
 import { CartService } from 'src/app/shared/cart.service';
 import { ICart, IItem } from '../shared/book.model';
@@ -24,24 +24,40 @@ export class CartComponent implements OnInit {
   deliveryCost: number;
   deliveryBy: string = 'Motorbike';
   form: FormGroup;
+  initUserInfor: any;
   constructor(public dialog: MatDialog,
     private _cartService: CartService,
     private _fb: FormBuilder,
     private _snackBar: MatSnackBar,
     private _router: Router,
+    private _activatedRoute: ActivatedRoute,
     private _cachingService: CachingService) { }
 
   ngOnInit(): void {
-    this.cart = this.getCart();
-    if (this.cart) {
-      this.factorForMotorBike = this.computeFactor('Motorbike');
-      this.factorForTrain = this.computeFactor('Train');
-      this.factorForAirCraft = this.computeFactor('AirCraft');
-      this.chooseDelivery('Motorbike');
-    }
+    this.initUserInfor = this._cachingService.localStorage.get('userInfor');
+    this.factorForMotorBike = this.computeFactor('Motorbike');
+    this.factorForTrain = this.computeFactor('Train');
+    this.factorForAirCraft = this.computeFactor('AirCraft');
+    this._activatedRoute.queryParams.subscribe(
+      param => {
+        if (param['cartid']) {
+          const cartHistory = <Array<any>>this._cachingService.localStorage.get(`cartHistory${this.initUserInfor.Id || this.initUserInfor.id}`);
+          const reOrderCart = cartHistory.find(c => c.id == param['cartid']);
+          this.cart = <ICart>reOrderCart.cart;
+          this.chooseDelivery(reOrderCart.deliveryBy);
+          this.initUserInfor = {...this.initUserInfor, ...reOrderCart.user};
+        } else {
+          this.cart = this.getCart();
+          this.chooseDelivery('Motorbike');
+        }
+        this.initForm(this.initUserInfor);
+      })
+  }
+
+  initForm(userInfor: any) {
     const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    const userInfor = this._cachingService.localStorage.get('userInfor');
     this.form = this._fb.group({
+      Id: [userInfor.id],
       Username: [userInfor?.name || userInfor?.Username, Validators.required],
       Email: [userInfor?.email || userInfor?.Email, [Validators.required, Validators.pattern(emailregex)]],
       Phone: [userInfor.Phone || '', Validators.required],
@@ -145,8 +161,8 @@ export class CartComponent implements OnInit {
   checkOut() {
     this.form.markAllAsTouched();
     if (this.form.invalid || this.cart.Items.length === 0) return;
-    const cartHistory = this._cachingService.localStorage.get('cartHistory') || [];
-    this._cachingService.localStorage.store('cartHistory', [...cartHistory, {
+    const cartHistory = this._cachingService.localStorage.get(`cartHistory${this.initUserInfor.Id}`) || [];
+    this._cachingService.localStorage.store(`cartHistory${this.initUserInfor.Id}`, [...cartHistory, {
       id: Math.floor(Math.random() * 100) + 1,
       cart: this.cart,
       user: this.form.value,
