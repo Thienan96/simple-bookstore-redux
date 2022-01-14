@@ -57,7 +57,7 @@ export class CartComponent implements OnInit {
   initForm(userInfor: any) {
     const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     this.form = this._fb.group({
-      Id: [userInfor.id],
+      Id: [userInfor.id || userInfor.Id],
       Username: [userInfor?.name || userInfor?.Username, Validators.required],
       Email: [userInfor?.email || userInfor?.Email, [Validators.required, Validators.pattern(emailregex)]],
       Phone: [userInfor.Phone || '', Validators.required],
